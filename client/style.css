@@ -1,0 +1,91 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: lavender;
+  font-family: 'Trebuchet MS';
+}
+
+input[type="submit"]
+{
+  background-color: black;
+  text-transform: uppercase !important;
+	border-radius: 15px 0px !important;
+	padding: 1rem;
+	color: white;
+  border-width: 2px white solid;
+  margin: 1rem;
+}
+
+.app-style
+{
+  background-color: white;
+  border-radius: 15px 15px !important;
+  border: black solid;
+  border-width: 2px ;
+  margin: 3rem;
+}
+
+.task-submit-div
+{
+  text-align: center;
+}
+
+.task-submit
+{
+  min-width: 20rem;
+  text-align: center;
+}
+
+.form-section
+{
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+}
+
+.label
+{
+  margin-right: 1rem;
+}
+
+.inputField
+{
+  margin-left: auto;
+  min-width: 200px;
+  border:black 1px solid;
+  display: flex;
+}
+
+.title{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+#schedule{
+  font-size: 1.5rem;
+}
+
+#container
+{
+  margin: 0 auto;
+}
+
+#top h1 {
+  font-size: 2em;
+}
+
+#userForm
+{
+  padding-top: 2rem;
+  text-align: center;
+}
+
+#content {
+  margin-top: 5rem;
+  font-size: 2em;
+  text-align: center;
+}
