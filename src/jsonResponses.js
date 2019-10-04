@@ -100,7 +100,7 @@ const addUser = (request, response, body) => {
   const responseJSON = {
     message: 'Date, class and task are all required.',
   };
-  
+
   console.dir(body);
 
   if (!body.date || !body.class || !body.task) {
@@ -125,7 +125,8 @@ const addUser = (request, response, body) => {
   }
 
   // catch
-  return respondJSONMeta(request, response, 204); // sending data to inform user body is updated instead of created
+  return respondJSONMeta(request, response, 204);
+  // sending data to inform user body is updated instead of created
 };
 
 // exports to set functions to public.
