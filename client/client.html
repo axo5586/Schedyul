@@ -27,8 +27,12 @@
   </style> -->
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/javascript" src="../src/date.js"></script>
   <script type="text/babel">
 
+    //global today variable
+    let today;
+    let nextWeek;
 
     //function to handle our xhr response
     const handleResponse = (xhr) => {
@@ -113,7 +117,39 @@
     };
 
 
+    //dynamically calculates today's date
+    let calculateToday = () => {
+      var today = new Date();
+      var dd = today.getDate();
+      //jan is 0
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+
+      if(dd < 10) {
+          dd = '0'+ dd
+      } 
+
+      if(mm < 10) {
+          mm = '0'+ mm
+      } 
+
+      today = yyyy + '/' + mm + '/' + dd;
+      console.log("Today: ", today);
+      return today;
+    }
+
     const init = () => {
+
+      //calculates date
+
+      const dateField = document.querySelector('#dateField');
+
+      today = calculateToday();
+      nextMonth = Date.today().next().month();
+      dateField.setAttribute('min', today);
+      dateField.setAttribute('max', nextMonth);
+      console.log("Max after: ", dateField.max);
+
       const schedule = document.querySelector('#schedule');
       const addUser = (e) => sendPost(e, schedule);
       schedule.addEventListener('submit', addUser);
@@ -128,18 +164,20 @@
       userForm.addEventListener('submit', handleGet);
     };
 
+
     window.onload = init;
    
   </script>
 </head>
 <body>
-  <img class = "title" src = "https://i.imgur.com/IgKdisZ.png"  alt = "title">
+  <!-- https://i.imgur.com/IgKdisZ.png -->
+  <img class = "title" src = "header.png"  alt = "title">
   <div class = "app-style">
     <!-- <h3 >Schedyul</h3> -->
     <div id="container">
       <form id="schedule" action="/addUser" method="post">
         <div class="form-section">
-          <label for="date">Date: </label>
+          <label for="date">Date (Limited to month): </label>
           <input id="dateField" type="date" class="inputField" name="date" />
         </div>
         <div class="form-section">
