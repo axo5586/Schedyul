@@ -6,6 +6,7 @@ const fs = require('fs'); // pull in the file system module
 // synchronous operations or load entire files into memory.
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
+const header = fs.readFileSync(`${__dirname}/../client/header.png`);
 
 // function to handle the index page
 const getIndex = (request, response) => {
@@ -25,10 +26,17 @@ const getCSS = (request, response) => {
   response.end();
 };
 
+const getHeader = (request, response) => {
+  response.writeHead(200, { 'Content-Type': 'image/png' });
+  response.write(header);
+  response.end();
+};
+
 // exports to set functions to public.
 // In this syntax, you can do getIndex:getIndex, but if they
 // are the same name, you can short handle to just getIndex,
 module.exports = {
   getIndex,
   getCSS,
+  getHeader,
 };

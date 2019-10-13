@@ -98,26 +98,29 @@ const notFound = (request, response) => {
 
 const addUser = (request, response, body) => {
   const responseJSON = {
-    message: 'Date, class and task are all required.',
+    message: 'Name, date, class and task are all required to add task.',
   };
 
   console.dir(body);
 
-  if (!body.date || !body.class || !body.task) {
+  if (!body.date || !body.class || !body.task || !body.name) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
 
   let responseCode = 201; // success created
-  if (users[body.date]) {
+
+  // handles update
+  if (users[body.name]) {
     responseCode = 204;
   } else {
-    users[body.date] = {};
-    users[body.date].date = body.date;
+    users[body.name] = {};
+    users[body.name].dates = {};
+    users[body.name].name = body.name;
   }
-
-  users[body.date].class = body.class;
-  users[body.date].task = body.task;
+  users[body.name].dates += body.date;
+  users[body.name].class = body.class;
+  users[body.name].task = body.task;
 
   if (responseCode === 201) {
     responseJSON.message = 'Created Successfully';
