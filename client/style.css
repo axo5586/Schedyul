@@ -27,6 +27,17 @@ input[type="submit"]
   margin: 3rem;
 }
 
+.message
+{
+  color: red;
+}
+
+.username
+{
+  min-width: 20rem;
+  text-align: center;
+}
+
 .task-submit-div
 {
   text-align: center;

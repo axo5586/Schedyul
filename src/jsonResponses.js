@@ -96,6 +96,23 @@ const notFound = (request, response) => {
   respondJSON(request, response, 404, responseJSON);
 };
 
+const getUser = (request, response, body) => {
+  const responseJSON = {
+    users,
+    message: `getting tasks from user: ${body.name}`,
+  };
+  console.dir('Get User body', body);
+
+  if (!body.name) {
+    responseJSON.id = 'missingParams';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+
+  responseJSON.message = 'Created Successfully';
+  responseJSON.id = 'Success';
+  return respondJSON(request, response, 204, responseJSON);
+};
+
 const addUser = (request, response, body) => {
   const responseJSON = {
     message: 'Name, date, class and task are all required to add task.',
@@ -114,21 +131,35 @@ const addUser = (request, response, body) => {
   if (users[body.name]) {
     responseCode = 204;
   } else {
-    users[body.name] = {};
-    users[body.name].dates = {};
+    users[body.name] = ({});
+    users[body.name].dates = [];
+    users[body.name].class = [];
+    users[body.name].task = [];
     users[body.name].name = body.name;
   }
-  users[body.name].dates += body.date;
-  users[body.name].class = body.class;
-  users[body.name].task = body.task;
+  users[body.name].dates.push(body.date);
+  users[body.name].class.push(body.class);
+  users[body.name].task.push(body.task);
+  // else if(users[body.name].dates){
+  //   for(i = 0; i < users[body.name].dates; i++)
+  //   {
+  //     if(users[body.name].dates[i] === body.date)
+  //     {
+
+  //     }
+  //     else{
+  //       users[body.name].dates.push(body.date);
+  //     }
+  //   }
+  // }
 
   if (responseCode === 201) {
     responseJSON.message = 'Created Successfully';
     return respondJSON(request, response, responseCode, responseJSON);
   }
 
-  // catch
-  return respondJSONMeta(request, response, 204);
+  return respondJSONMeta(request, response, 201);
+
   // sending data to inform user body is updated instead of created
 };
 
@@ -136,6 +167,7 @@ const addUser = (request, response, body) => {
 module.exports = {
   getUsers,
   getUsersHead,
+  getUser,
   notReal,
   notRealHead,
   notFound,

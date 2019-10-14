@@ -17,7 +17,9 @@
       const content = document.querySelector("#content");
       
       ///parse the response text into a JSON object
+  
       const obj = JSON.parse(xhr.response);
+      console.log(xhr.response);
       
       //check the xhr status code and handle accordingly
       switch(xhr.status) {
@@ -25,10 +27,10 @@
           content.innerHTML = `<b>Success</b>`;
           break;
         case 201:
-        content.innerHTML = '<b>Create</b>';
+        content.innerHTML = '<b>Created</b>';
           break;
         case 204:
-        content.innerHTML = '<b>Updated(No Content 204)</b>';
+        content.innerHTML = '<b>Updated</b>';
           break;
         case 400:
         content.innerHTML = '<b>Bad Request(400)</b>';
@@ -40,18 +42,41 @@
       
       //If the server sent back a message in JSON, add it to the screen.
       if(obj.message) {
-        // for (let i = 0; i < obj.users.length; i++) {
-        //   content.innerHTML += `<p>Name: ${obj.users[i].name}</p>`
-        //   console.log("User" , obj.users[i]);
-        //   console.log("Name" , obj.users[i].name);
-        //   console.log("Date" , obj.users[i].date);
-        //   content.innerHTML += `<p>Date: ${obj.users[i].date}</p>`
-        //   content.innerHTML += `<p>Class: ${obj.users[i].class}</p>`
-        //   content.innerHTML += `<p>Task: ${obj.users[i].task}</p>`
-        // }
+
+        if(obj.users)
+        {
+          console.log("OBJ.users: ", obj.users);
+          //handles printing for get
+          for ( let i = 0; i < 1; i++)
+          {
+            //console.log("User: ", obj.users.Andy.dates[i]);
+            for(let user in obj.users)
+            {
+              console.log("User: ", user);
+              console.log("User: ", user.dates);
+              content.innerHTML += `<p>Name: ${user}</p>`
+              for( let j = 0; j < user.dates.length; j++)
+              {
+                let tempDate = '';
+                if(tempDate === user.dates[j])
+                {
+
+                }
+                else
+                {
+                  content.innerHTML += `<p>Date: ${user.dates[j]}</p>`
+                  tempDate = user.dates[j];
+                }
+                content.innerHTML += `<p>Class: ${user.class[j]}</p>`
+                content.innerHTML += `<p>Task: ${user.task[j]}</p>`
+                content.innerHTML += `<p>Hi!!</p>`
+              }
+            }
+          }
+        }
         
-        console.log("OBJ: ", obj.u);
-        content.innerHTML += `<p>Message: ${obj.message}</p>`
+        console.log("OBJ: ", obj);
+        content.innerHTML += `<p class = "message">Message: ${obj.message}</p>`
       }
 
     };
@@ -84,6 +109,7 @@
     //function to send ajax
     const sendAjax = (e, url) => {
 
+      
       //create a new xhr (ajax) request. 
       const xhr = new XMLHttpRequest();
       
@@ -121,7 +147,7 @@
           mm = '0'+ mm
       } 
 
-      today = mm + '/' + dd + '/' + yyyy;
+      today = yyyy + '-' + mm + '-' + dd;
       console.log("Today: ", today);
       return today;
     }
@@ -184,16 +210,21 @@
       </form>
   
       <form id="userForm" action="/getUsers" method="get">
+        <div>
+            <input id="usernameField" class = "username" type="text" placeholder = "username" name="username" />
+        </div>
         <select id='urlField'>
           <option value='/getUsers'>/getUsers</option>
-          <option value='/notReal'>/notReal</option>
+          <!-- <option value='/getUser'>/getUser</option> -->
         </select>
         <select id="methodSelect">
           <option value="get">GET</option>
-          <option value="head">HEAD</option>
+          <!-- <option value="head">HEAD</option> -->
         </select>
         <input type="submit" value="Get User" />
       </form>
+      <button id = "pdf"></button>
+      
      
     </div>
   </div>
